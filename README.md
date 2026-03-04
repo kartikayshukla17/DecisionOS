@@ -10,14 +10,15 @@ The frontend is built with modern, high-performance web technologies:
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4, `next-themes` (Dark/Light mode)
 - **State Management & Data Fetching**: TanStack React Query
-- **Database/Auth Client**: `@supabase/ssr` & `@supabase/supabase-js`
+- **Database**: `@supabase/supabase-js`
+- **Authentication / Auth Client**: Supabase Auth (via `@supabase/ssr`)
 - **Icons**: Lucide React
 
 ### Backend (`api/`)
 The backend provides robust APIs and handles heavy AI processing / scheduled tasks:
 - **Framework**: NestJS 11
 - **Language**: TypeScript
-- **Authentication**: Passport.js (JWT-based)
+- **Authentication**: Supabase Auth validated via Passport.js (JWT-based verification)
 - **Database & Queue**: Supabase (PostgreSQL) and `pg-boss` for background job processing directly within Postgres
 - **AI Integrations**: Google GenAI (`gemini-embedding-001` / `text-embedding-004`) and Groq (`groq-sdk`) for RAG and inference
 - **Validation**: Zod
@@ -26,9 +27,11 @@ The backend provides robust APIs and handles heavy AI processing / scheduled tas
 - **Provider**: Supabase (PostgreSQL)
 - **Features**: Uses `pgvector` for storing embeddings and performing vector similarity searches. Raw data is processed and structured into formal decisions and action items (commitments).
 
-## Integrations
-- **GitHub**: Fully integrated for ingesting repository events, backfilling data, parsing permissions, and tracking decisions.
-- **Gmail / Google Calendar**: Database structure is prepared for future integrations.
+## Integrations (Powering the Decision Engine)
+- **GitHub**: Deeply integrated for tracking engineering decisions. Ingests repository events, backfills historical data, extracts formal commits/issues, and interprets repository roles/permissions.
+- **Gmail**: Seamlessly ingests email threads to discover, structure, and summarize critical management and business decisions.
+- **Google Calendar**: Tracks meeting schedules and captures post-meeting action items to enrich the decision context.
+- **Stripe**: Billing and subscription management for organizational tiers and API infrastructure usage.
 
 ## Setup and Development
 
