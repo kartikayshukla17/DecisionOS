@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+/* ─── Custom fonts registered as Tailwind utilities ─── */
+@theme {
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+
+  /* Design tokens — these become Tailwind color utilities      */
+  /* e.g. bg-ground, text-accent, border-border                 */
+  /* They reference CSS variables so .hud class can override    */
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-text: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border-col);
+}
+
+/* ─── Light (Landing / Login) ─────────────────────── */
+@layer base {
+  :root {
+    --ground: #F5F2EB;
+    /* warm parchment   */
+    --surface: #FFFEFB;
+    /* near-white cream  */
+    --accent: #059669;
+    /* emerald-600       */
+    --foreground: #171412;
+    /* near-black        */
+    --muted: #7C7168;
+    /* warm stone        */
+    --border-col: #DDD9D0;
+    /* parchment border  */
+  }
+
+  /* Dark toggle for landing */
+  html.dark {
+    --ground: #0E1210;
+    --surface: #171C19;
+    --accent: #34D399;
+    /* emerald-400       */
+    --foreground: #EAF0EC;
+    --muted: #6B7570;
+    --border-col: #1E2921;
+  }
+
+  /* HUD (Dashboard) — always dark forest */
+  .hud {
+    --ground: #0A0F0D;
+    --surface: #111916;
+    --accent: #34D399;
+    /* emerald-400       */
+    --foreground: #E8F0EB;
+    --muted: #5A6E63;
+    --border-col: rgba(52, 211, 153, 0.1);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--ground);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #0A0F0D;
+  }
+}
+
+/* ─── Background Textures ──────────────────────────── */
+@layer utilities {
+
+  /* Fine grid — graph paper for landing */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* HUD grid — more subtle */
+  .bg-hud-grid {
+    background-image:
+      linear-gradient(to right, rgba(52, 211, 153, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(52, 211, 153, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Radial top glow for HUD */
+  .bg-hud-glow {
+    background:
+      radial-gradient(ellipse 90% 35% at 50% -2%, rgba(52, 211, 153, 0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 20% at 50% 100%, rgba(52, 211, 153, 0.04) 0%, transparent 70%);
+  }
+
+  /* ─── Animations ──────────────────────────────────── */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-x {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-dot {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: -200% center;
+    }
+
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Stagger system */
+  .enter {
+    animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .enter-x {
+    animation: slide-x 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .enter-scale {
+    animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .d-1 {
+    animation-delay: 50ms;
+  }
+
+  .d-2 {
+    animation-delay: 110ms;
+  }
+
+  .d-3 {
+    animation-delay: 170ms;
+  }
+
+  .d-4 {
+    animation-delay: 230ms;
+  }
+
+  .d-5 {
+    animation-delay: 290ms;
+  }
+
+  .d-6 {
+    animation-delay: 350ms;
+  }
+
+  .d-7 {
+    animation-delay: 410ms;
+  }
+
+  .d-8 {
+    animation-delay: 470ms;
+  }
+
+  /* Blink / pulse */
+  .blink {
+    animation: blink 1.2s step-end infinite;
+  }
+
+  .pulse-dot {
+    position: relative;
+  }
+
+  .pulse-dot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: currentColor;
+    animation: pulse-dot 1.8s ease-out infinite;
+  }
+
+  /* Shimmer loading skeleton */
+  .skeleton {
+    background: linear-gradient(90deg,
+        var(--surface) 0%,
+        color-mix(in srgb, var(--accent) 6%, var(--surface)) 50%,
+        var(--surface) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease infinite;
+  }
+
+  /* Status colors */
+  .status-critical {
+    color: #F87171;
+  }
+
+  .status-pending {
+    color: #FB923C;
+  }
+
+  .status-approved {
+    color: #34D399;
+  }
+
+  .status-resolved {
+    color: var(--muted);
+  }
+
+  .border-critical {
+    border-left-color: #F87171 !important;
+  }
+
+  .border-pending {
+    border-left-color: #FB923C !important;
+  }
+
+  .border-approved {
+    border-left-color: #34D399 !important;
+  }
+}
